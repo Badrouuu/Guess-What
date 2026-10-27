@@ -4,7 +4,7 @@
 
 **A semantic Word2Vec analogy game and $k$-NN latent search engine with a Family Feud flip board.**
 
-[![CI - VectorWord Pipeline](https://github.com/badro/Guess-What/actions/workflows/ci.yml/badge.svg)](https://github.com/badro/Guess-What/actions/workflows/ci.yml)
+[![CI - VectorWord Pipeline](https://github.com/Badrouuu/Guess-What/actions/workflows/ci.yml/badge.svg)](https://github.com/Badrouuu/Guess-What/actions/workflows/ci.yml)
 [![Next.js 16](https://img.shields.io/badge/Next.js-16.3-black?style=flat-square&logo=next.js)](https://nextjs.org/)
 [![React 19](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react)](https://react.dev/)
 [![Python 3.12+](https://img.shields.io/badge/Python-3.12%2B-blue?style=flat-square&logo=python)](https://www.python.org/)
@@ -175,7 +175,7 @@ Guess-What/
 
 ### 1. Cloner le Dépôt
 ```bash
-git clone https://github.com/badro/Guess-What.git
+git clone https://github.com/Badrouuu/Guess-What.git
 cd Guess-What
 ```
 
