@@ -1,0 +1,272 @@
+[
+  {
+    "id": "fr_001",
+    "word_a": "roi",
+    "word_b": "homme",
+    "word_c": "femme",
+    "answer": "reine",
+    "category": "royauté",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_002",
+    "word_a": "Paris",
+    "word_b": "France",
+    "word_c": "Allemagne",
+    "answer": "Berlin",
+    "category": "géographie",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_003",
+    "word_a": "chien",
+    "word_b": "chiot",
+    "word_c": "chat",
+    "answer": "chaton",
+    "category": "animaux",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_004",
+    "word_a": "médecin",
+    "word_b": "hôpital",
+    "word_c": "avocat",
+    "answer": "tribunal",
+    "category": "professions",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_005",
+    "word_a": "couteau",
+    "word_b": "couper",
+    "word_c": "stylo",
+    "answer": "écrire",
+    "category": "objets",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_006",
+    "word_a": "jour",
+    "word_b": "nuit",
+    "word_c": "été",
+    "answer": "hiver",
+    "category": "temps",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_007",
+    "word_a": "lune",
+    "word_b": "nuit",
+    "word_c": "soleil",
+    "answer": "jour",
+    "category": "astronomie",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_008",
+    "word_a": "livre",
+    "word_b": "lire",
+    "word_c": "film",
+    "answer": "regarder",
+    "category": "loisirs",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_009",
+    "word_a": "voiture",
+    "word_b": "route",
+    "word_c": "bateau",
+    "answer": "mer",
+    "category": "transport",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_010",
+    "word_a": "piano",
+    "word_b": "musicien",
+    "word_c": "pinceau",
+    "answer": "peintre",
+    "category": "arts",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_011",
+    "word_a": "froid",
+    "word_b": "manteau",
+    "word_c": "chaud",
+    "answer": "maillot",
+    "category": "vêtements",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_012",
+    "word_a": "football",
+    "word_b": "stade",
+    "word_c": "natation",
+    "answer": "piscine",
+    "category": "sport",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_013",
+    "word_a": "farine",
+    "word_b": "pain",
+    "word_c": "raisin",
+    "answer": "vin",
+    "category": "cuisine",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_014",
+    "word_a": "ordinateur",
+    "word_b": "programmer",
+    "word_c": "guitare",
+    "answer": "jouer",
+    "category": "activités",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_015",
+    "word_a": "montagne",
+    "word_b": "neige",
+    "word_c": "plage",
+    "answer": "sable",
+    "category": "nature",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_016",
+    "word_a": "père",
+    "word_b": "fils",
+    "word_c": "mère",
+    "answer": "fille",
+    "category": "famille",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_017",
+    "word_a": "professeur",
+    "word_b": "école",
+    "word_c": "chef",
+    "answer": "restaurant",
+    "category": "professions",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_018",
+    "word_a": "aigle",
+    "word_b": "voler",
+    "word_c": "dauphin",
+    "answer": "nager",
+    "category": "animaux",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_019",
+    "word_a": "soleil",
+    "word_b": "chaleur",
+    "word_c": "pluie",
+    "answer": "fraîcheur",
+    "category": "météo",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_020",
+    "word_a": "guerre",
+    "word_b": "paix",
+    "word_c": "haine",
+    "answer": "amour",
+    "category": "émotions",
+    "difficulty": 3
+  },
+  {
+    "id": "fr_021",
+    "word_a": "France",
+    "word_b": "baguette",
+    "word_c": "Italie",
+    "answer": "pizza",
+    "category": "gastronomie",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_022",
+    "word_a": "nuit",
+    "word_b": "étoiles",
+    "word_c": "jour",
+    "answer": "nuages",
+    "category": "ciel",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_023",
+    "word_a": "printemps",
+    "word_b": "fleurs",
+    "word_c": "automne",
+    "answer": "feuilles",
+    "category": "saisons",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_024",
+    "word_a": "eau",
+    "word_b": "soif",
+    "word_c": "nourriture",
+    "answer": "faim",
+    "category": "besoins",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_025",
+    "word_a": "lion",
+    "word_b": "savane",
+    "word_c": "ours",
+    "answer": "forêt",
+    "category": "animaux",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_026",
+    "word_a": "enfant",
+    "word_b": "adulte",
+    "word_c": "matin",
+    "answer": "soir",
+    "category": "opposés",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_027",
+    "word_a": "Rome",
+    "word_b": "Italie",
+    "word_c": "Madrid",
+    "answer": "Espagne",
+    "category": "géographie",
+    "difficulty": 1
+  },
+  {
+    "id": "fr_028",
+    "word_a": "pluie",
+    "word_b": "parapluie",
+    "word_c": "soleil",
+    "answer": "lunettes",
+    "category": "accessoires",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_029",
+    "word_a": "feu",
+    "word_b": "brûler",
+    "word_c": "glace",
+    "answer": "fondre",
+    "category": "physique",
+    "difficulty": 2
+  },
+  {
+    "id": "fr_030",
+    "word_a": "chanter",
+    "word_b": "voix",
+    "word_c": "danser",
+    "answer": "corps",
+    "category": "arts",
+    "difficulty": 3
+  }
+]

@@ -1,0 +1,78 @@
+{
+  "culture": {
+    "capitale_de": [
+      ["Paris", "France"], ["Berlin", "Allemagne"], ["Rome", "Italie"], ["Madrid", "Espagne"],
+      ["Londres", "Royaume-Uni"], ["Tokyo", "Japon"], ["Pékin", "Chine"], ["Washington", "États-Unis"],
+      ["Ottawa", "Canada"], ["Brasilia", "Brésil"], ["Canberra", "Australie"], ["Athènes", "Grèce"],
+      ["Lisbonne", "Portugal"], ["Amsterdam", "Pays-Bas"], ["Bruxelles", "Belgique"], ["Berne", "Suisse"]
+    ],
+    "monnaie_de": [
+      ["Euro", "France"], ["Yen", "Japon"], ["Dollar", "États-Unis"], ["Livre", "Royaume-Uni"],
+      ["Franc", "Suisse"], ["Rouble", "Russie"], ["Yuan", "Chine"], ["Real", "Brésil"]
+    ],
+    "ecrit_par": [
+      ["Les Misérables", "Victor Hugo"], ["Hamlet", "Shakespeare"], ["Le Petit Prince", "Saint-Exupéry"],
+      ["L'Étranger", "Albert Camus"], ["Germinal", "Émile Zola"], ["L'Iliade", "Homère"],
+      ["Don Quichotte", "Cervantès"], ["1984", "George Orwell"]
+    ],
+    "peint_par": [
+      ["La Joconde", "Léonard de Vinci"], ["Guernica", "Picasso"], ["La Nuit étoilée", "Van Gogh"],
+      ["Les Nymphéas", "Monet"], ["Le Cri", "Munch"], ["La Naissance de Vénus", "Botticelli"],
+      ["La Jeune Fille à la perle", "Vermeer"]
+    ]
+  },
+  "gaming": {
+    "heros_de": [
+      ["Mario", "Super Mario"], ["Link", "Zelda"], ["Master Chief", "Halo"],
+      ["Kratos", "God of War"], ["Nathan Drake", "Uncharted"], ["Geralt", "The Witcher"],
+      ["Arthur Morgan", "Red Dead"], ["Sonic", "Sonic the Hedgehog"], ["Lara Croft", "Tomb Raider"],
+      ["Cloud", "Final Fantasy"], ["Gordon Freeman", "Half-Life"], ["Solid Snake", "Metal Gear"]
+    ],
+    "constructeur_de": [
+      ["Nintendo", "Switch"], ["Sony", "PlayStation"], ["Microsoft", "Xbox"],
+      ["Sega", "Mega Drive"], ["Valve", "Steam Deck"], ["Atari", "Atari 2600"]
+    ],
+    "nemesis_de": [
+      ["Bowser", "Mario"], ["Ganon", "Link"], ["Joker", "Batman"],
+      ["Sephiroth", "Cloud"], ["Eggman", "Sonic"], ["Vergil", "Dante"]
+    ],
+    "genre_de": [
+      ["Minecraft", "bac à sable"], ["Fortnite", "battle royale"], ["Dark Souls", "action-rpg"],
+      ["Counter-Strike", "fps"], ["Street Fighter", "combat"], ["FIFA", "sport"],
+      ["Portal", "puzzle"], ["Civilization", "stratégie"]
+    ]
+  },
+  "cinema": {
+    "realisateur_de": [
+      ["Inception", "Nolan"], ["Pulp Fiction", "Tarantino"], ["Titanic", "Cameron"],
+      ["Jurassic Park", "Spielberg"], ["Gladiator", "Ridley Scott"], ["Le Parrain", "Coppola"],
+      ["Amélie", "Jeunet"], ["Le Voyage de Chihiro", "Miyazaki"], ["Fight Club", "Fincher"],
+      ["Taxi Driver", "Scorsese"], ["Shining", "Kubrick"], ["Parasite", "Bong Joon-ho"]
+    ],
+    "acteur_de": [
+      ["Neo", "Keanu Reeves"], ["Jack Dawson", "DiCaprio"], ["Tony Stark", "Robert Downey Jr"],
+      ["Wolverine", "Hugh Jackman"], ["Forrest Gump", "Tom Hanks"], ["Indiana Jones", "Harrison Ford"],
+      ["Terminator", "Schwarzenegger"], ["Joker", "Joaquin Phoenix"]
+    ],
+    "univers_de": [
+      ["Luke", "Star Wars"], ["Frodon", "Seigneur des Anneaux"], ["Harry Potter", "Poudlard"],
+      ["Katniss", "Hunger Games"], ["Neo", "Matrix"], ["Batman", "Gotham"]
+    ]
+  },
+  "food": {
+    "plat_de": [
+      ["Pizza", "Italie"], ["Sushi", "Japon"], ["Taco", "Mexique"], ["Paella", "Espagne"],
+      ["Couscous", "Maroc"], ["Poutine", "Canada"], ["Fish and chips", "Angleterre"],
+      ["Baguette", "France"], ["Burger", "États-Unis"], ["Curry", "Inde"]
+    ],
+    "ingredient_de": [
+      ["Farine", "Pain"], ["Raisin", "Vin"], ["Pomme", "Cidre"], ["Cacao", "Chocolat"],
+      ["Lait", "Fromage"], ["Orge", "Bière"], ["Olive", "Huile"], ["Canne", "Rhum"]
+    ],
+    "artisan_de": [
+      ["Boulanger", "Pain"], ["Boucher", "Viande"], ["Pâtissier", "Gâteau"],
+      ["Vigneron", "Vin"], ["Fromager", "Fromage"], ["Chocolatier", "Chocolat"],
+      ["Poissonnier", "Poisson"], ["Maraîcher", "Légume"]
+    ]
+  }
+}

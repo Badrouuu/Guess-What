@@ -1,0 +1,85 @@
+# ==========================================
+# Dependencies
+# ==========================================
+node_modules/
+.pnp
+.pnp.js
+venv/
+.venv/
+env/
+ENV/
+
+# ==========================================
+# Next.js & Frontend Builds
+# ==========================================
+frontend/.next/
+frontend/out/
+frontend/build/
+.next/
+out/
+build/
+*.tsbuildinfo
+next-env.d.ts
+
+# ==========================================
+# Python & Machine Learning Artifacts
+# ==========================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+*.egg-info/
+!frontend/lib/
+!frontend/.env.example
+.installed.cfg
+*.egg
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ==========================================
+# Environment Variables & Secrets (Keep .example files)
+# ==========================================
+.env
+.env*.local
+*.env
+!*.env.example
+frontend/.env.local
+backend/.env
+
+# ==========================================
+# Large Binary Models & Vectors Cache
+# (Downloaded dynamically via scripts/download_vectors.py)
+# ==========================================
+backend/data/*.bin
+backend/data/*.vec
+backend/data/conceptnet-numberbatch*.gz
+
+# ==========================================
+# IDEs & System Files
+# ==========================================
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ==========================================
+# Logs
+# ==========================================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
