@@ -6,6 +6,9 @@ interface AnalogyDisplayProps {
   wordA: string;
   wordB: string;
   wordC: string;
+  targetWord?: string | null;
+  isSolved?: boolean;
+  isGameOver?: boolean;
   lang?: string;
   answerLength?: number;
   firstLetter?: string | null;
@@ -23,6 +26,9 @@ export default function AnalogyDisplay({
   wordA,
   wordB,
   wordC,
+  targetWord = null,
+  isSolved = false,
+  isGameOver = false,
   lang = "fr",
   answerLength = 0,
   firstLetter = null,
@@ -40,6 +46,8 @@ export default function AnalogyDisplay({
       letterMask = "_ ".repeat(answerLength).trim();
     }
   }
+
+  const isWordRevealed = (isSolved || isGameOver) && !!targetWord;
 
   return (
     <div className="flex flex-col items-center gap-4 w-full select-none">
@@ -67,7 +75,7 @@ export default function AnalogyDisplay({
           <span className="h-px w-8 bg-gray-800" />
         </div>
 
-        {/* Ligne 2 : [C] est à [ ? ? ? ] */}
+        {/* Ligne 2 : [C] est à [ ??? / MOT TROUVÉ ] */}
         <div className="flex flex-wrap items-center justify-center gap-2 md:gap-3 text-base md:text-lg">
           <span className="px-3.5 py-1.5 rounded-xl bg-green-950/80 border border-green-500/40 text-green-300 font-black uppercase tracking-wide shadow-md shadow-green-500/10">
             {wordC}
@@ -76,14 +84,32 @@ export default function AnalogyDisplay({
             {lbl.target}
           </span>
           
-          {/* Boîte Cible Mystère */}
-          <div className="relative group px-4 py-1.5 rounded-xl bg-gradient-to-r from-yellow-500/20 to-amber-500/20 border-2 border-dashed border-yellow-400/80 text-yellow-300 font-black tracking-widest flex items-center justify-center shadow-lg shadow-yellow-500/10 animate-pulse">
-            <span className="text-sm md:text-base">? ? ?</span>
-          </div>
+          {/* Boîte Cible : Si trouvé, affiche le mot résolu, sinon ??? */}
+          {isWordRevealed ? (
+            isSolved ? (
+              <div className="relative group px-4 py-1.5 md:px-5 md:py-2 rounded-xl bg-gradient-to-r from-emerald-600 via-green-500 to-emerald-600 border-2 border-emerald-300 text-white font-black tracking-wide flex items-center justify-center gap-1.5 shadow-xl shadow-emerald-500/30 animate-in zoom-in-90 duration-500">
+                <span className="text-base md:text-lg uppercase drop-shadow">
+                  {targetWord}
+                </span>
+                <span className="text-sm animate-bounce">✨</span>
+              </div>
+            ) : (
+              <div className="relative group px-4 py-1.5 md:px-5 md:py-2 rounded-xl bg-red-950/90 border-2 border-red-500/60 text-red-200 font-black tracking-wide flex items-center justify-center gap-1.5 shadow-lg shadow-red-500/20">
+                <span className="text-base md:text-lg uppercase">
+                  {targetWord}
+                </span>
+                <span className="text-[10px] text-red-400 uppercase font-semibold">(révélé)</span>
+              </div>
+            )
+          ) : (
+            <div className="relative group px-4 py-1.5 rounded-xl bg-gradient-to-r from-yellow-500/20 to-amber-500/20 border-2 border-dashed border-yellow-400/80 text-yellow-300 font-black tracking-widest flex items-center justify-center shadow-lg shadow-yellow-500/10 animate-pulse">
+              <span className="text-sm md:text-base">? ? ?</span>
+            </div>
+          )}
         </div>
 
-        {/* ─── Indice Automatique : Longueur & Première Lettre ──── */}
-        {errorCount >= 1 && answerLength > 0 && (
+        {/* ─── Indice Automatique : Longueur & Première Lettre (si pas encore trouvé) ──── */}
+        {!isWordRevealed && errorCount >= 1 && answerLength > 0 && (
           <div className="mt-1 pt-3 border-t border-gray-800/80 w-full flex flex-col items-center gap-1 animate-in fade-in duration-300">
             <p className="text-[11px] uppercase tracking-wider font-bold text-gray-400 flex items-center gap-1.5">
               <span>🔍 Indice débloqué :</span>
@@ -99,7 +125,7 @@ export default function AnalogyDisplay({
       <div className="w-full flex flex-col items-center">
         <button
           onClick={() => setShowMathView((v) => !v)}
-          className="text-[11px] text-gray-500 hover:text-gray-300 transition-colors flex items-center gap-1 font-mono"
+          className="text-[11px] text-gray-500 hover:text-gray-300 transition-colors flex items-center gap-1 font-mono cursor-pointer"
         >
           <span>{showMathView ? "▲ Masquer" : "▼ Afficher"} la formule vectorielle (IA)</span>
         </button>
@@ -112,7 +138,9 @@ export default function AnalogyDisplay({
             <span className="text-green-400 font-bold">+</span>
             <span className="text-green-400 font-bold">{wordC.toUpperCase()}</span>
             <span className="text-white">=</span>
-            <span className="text-yellow-400 font-bold">Vecteur Cible (?)</span>
+            <span className="text-yellow-400 font-bold">
+              {isWordRevealed ? targetWord?.toUpperCase() : "Vecteur Cible (?)"}
+            </span>
           </div>
         )}
       </div>

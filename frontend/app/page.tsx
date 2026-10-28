@@ -47,6 +47,7 @@ export default function HomePage() {
   const [lives, setLives] = useState(MAX_LIVES);
   const [score, setScore] = useState(0);
   const [wordsFound, setWordsFound] = useState(0);
+  const [solvedWord, setSolvedWord] = useState<string | null>(null);
   const [errorCount, setErrorCount] = useState(0);
   const [firstLetterClue, setFirstLetterClue] = useState(false);
   const [lastFeedback, setLastFeedback] = useState<GuessResult | null>(null);
@@ -91,6 +92,7 @@ export default function HomePage() {
     setShowResult(false);
     setScore(0);
     setWordsFound(0);
+    setSolvedWord(null);
     setLives(MAX_LIVES);
     setErrorCount(0);
     setFirstLetterClue(false);
@@ -124,6 +126,10 @@ export default function HomePage() {
       // Révèle toutes les cartes restantes
       try {
         const full = await revealFullTop10(lang, theme, challenge?.id);
+        const target = full.answer || full.top10?.find((s: { rank: number }) => s.rank === 1)?.word;
+        if (target) {
+          setSolvedWord((prev) => prev || target);
+        }
         setSlots((prev) =>
           prev.map((slot) => {
             const fullSlot = full.top10.find(
@@ -185,13 +191,20 @@ export default function HomePage() {
             )
           );
           setScore((s) => s + result.points);
-          setWordsFound((w) => {
-            const nextCount = w + 1;
-            if (nextCount >= 10) {
-              endGame("won");
-            }
-            return nextCount;
-          });
+          
+          // Si le joueur trouve la Cible #1 -> Victoire immédiate !
+          if (result.rank === 1) {
+            setSolvedWord(result.revealed_word || word);
+            endGame("won");
+          } else {
+            setWordsFound((w) => {
+              const nextCount = w + 1;
+              if (nextCount >= 10) {
+                endGame("won");
+              }
+              return nextCount;
+            });
+          }
 
           // Réinitialise justRevealed après l'animation
           setTimeout(() => {
@@ -248,11 +261,12 @@ export default function HomePage() {
       .sort((a, b) => a.rank - b.rank)
       .map((s) => (s.revealed && s.word ? "🟨" : "⬛"))
       .join("");
+    const targetDisplay = solvedWord ? solvedWord.toUpperCase() : "?";
     const text = `VectorWord — ${new Date().toLocaleDateString(lang)}
-${challenge?.word_a?.toUpperCase()} − ${challenge?.word_b?.toUpperCase()} + ${challenge?.word_c?.toUpperCase()} = ?
+${challenge?.word_a?.toUpperCase()} − ${challenge?.word_b?.toUpperCase()} + ${challenge?.word_c?.toUpperCase()} = ${targetDisplay}
 ${emojis}
-Score: ${score.toLocaleString()} pts (${wordsFound}/10)
-🧠 Joue sur vectorword.vercel.app`;
+Score: ${score.toLocaleString()} pts
+🧠 Joue sur guess-what.vercel.app`;
     navigator.clipboard.writeText(text).catch(() => {});
     alert(lang === "fr" ? "Copié dans le presse-papiers !" : "Copied!");
   };
@@ -424,7 +438,6 @@ Score: ${score.toLocaleString()} pts (${wordsFound}/10)
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <ScoreCounter
             score={score}
-            wordsFound={wordsFound}
             totalPossible={challenge.total_possible_points}
           />
           <LivesBar lives={lives} maxLives={MAX_LIVES} />
@@ -436,6 +449,9 @@ Score: ${score.toLocaleString()} pts (${wordsFound}/10)
             wordA={challenge.word_a}
             wordB={challenge.word_b}
             wordC={challenge.word_c}
+            targetWord={solvedWord}
+            isSolved={phase === "won" || (slots.find((s) => s.rank === 1)?.revealed ?? false)}
+            isGameOver={phase === "game_over"}
             lang={lang}
             answerLength={challenge.answer_length}
             firstLetter={firstLetterClue ? challenge.first_letter : null}
@@ -502,10 +518,10 @@ Score: ${score.toLocaleString()} pts (${wordsFound}/10)
                 <>
                   <p className="text-4xl mb-1">🏆</p>
                   <h2 className="text-2xl font-black text-yellow-400">
-                    Parfait !
+                    Mot Mystère Trouvé !
                   </h2>
                   <p className="text-gray-400 text-sm">
-                    Tous les mots trouvés !
+                    Félicitations, analogie résolue avec succès !
                   </p>
                 </>
               ) : (
@@ -515,7 +531,10 @@ Score: ${score.toLocaleString()} pts (${wordsFound}/10)
                     Partie terminée
                   </h2>
                   <p className="text-gray-400 text-sm">
-                    {wordsFound}/10 mots trouvés
+                    La cible était :{" "}
+                    <span className="text-yellow-400 font-bold uppercase tracking-wider">
+                      {solvedWord || "..."}
+                    </span>
                   </p>
                 </>
               )}
@@ -590,6 +609,8 @@ Score: ${score.toLocaleString()} pts (${wordsFound}/10)
         gameMode={gameMode}
         onReloadChallenge={() => loadChallenge(lang, theme, gameMode)}
         onRevealAllCards={(fullTop10) => {
+          const target = fullTop10.find((s) => s.rank === 1)?.word;
+          if (target) setSolvedWord(target);
           setSlots((prev) =>
             prev.map((slot) => {
               const match = fullTop10.find((s) => s.rank === slot.rank);
