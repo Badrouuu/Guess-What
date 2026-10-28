@@ -1,6 +1,6 @@
 // lib/api.ts — Appels vers le backend FastAPI
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "";
 
 export interface ChallengeData {
   id?: string;
