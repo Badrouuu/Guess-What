@@ -37,6 +37,15 @@ const THEMES = [
   { id: "food", label: "Food & Gastro", icon: "🍕" },
 ];
 
+interface ScoreBreakdown {
+  baseTarget: number;
+  intuitionBonus: number;
+  livesBonus: number;
+  satellitePoints: number;
+  total: number;
+  isPerfect: boolean;
+}
+
 export default function HomePage() {
   // ─── State ───────────────────────────────────────────────────────────────
   const [lang, setLang] = useState("fr");
@@ -46,6 +55,7 @@ export default function HomePage() {
   const [phase, setPhase] = useState<GamePhase>("loading");
   const [lives, setLives] = useState(MAX_LIVES);
   const [score, setScore] = useState(0);
+  const [scoreBreakdown, setScoreBreakdown] = useState<ScoreBreakdown | null>(null);
   const [wordsFound, setWordsFound] = useState(0);
   const [solvedWord, setSolvedWord] = useState<string | null>(null);
   const [errorCount, setErrorCount] = useState(0);
@@ -91,6 +101,7 @@ export default function HomePage() {
     setPhase("loading");
     setShowResult(false);
     setScore(0);
+    setScoreBreakdown(null);
     setWordsFound(0);
     setSolvedWord(null);
     setLives(MAX_LIVES);
@@ -110,13 +121,15 @@ export default function HomePage() {
 
   // ─── Fin de partie ────────────────────────────────────────────────────────
   const endGame = useCallback(
-    async (result: "won" | "game_over") => {
+    async (result: "won" | "game_over", finalEarnedScore?: number) => {
       setPhase(result);
       setShowResult(true);
 
+      const actualScore = finalEarnedScore !== undefined ? finalEarnedScore : score;
+
       // Met à jour le profil (victoires, séries, streaks)
       if (result === "won") {
-        const updated = recordWin(score);
+        const updated = recordWin(actualScore);
         setProfile(updated);
       } else {
         const updated = recordLoss();
@@ -190,20 +203,45 @@ export default function HomePage() {
                 : slot
             )
           );
-          setScore((s) => s + result.points);
-          
-          // Si le joueur trouve la Cible #1 -> Victoire immédiate !
+          // Si le joueur trouve la Cible #1 -> Victoire immédiate avec calcul méritocratique du score !
           if (result.rank === 1) {
-            setSolvedWord(result.revealed_word || word);
-            endGame("won");
-          } else {
-            setWordsFound((w) => {
-              const nextCount = w + 1;
-              if (nextCount >= 10) {
-                endGame("won");
+            const foundTarget = result.revealed_word || word;
+            setSolvedWord(foundTarget);
+
+            // Nombre de satellites découverts avant la cible
+            const satellitesFoundCount = slots.filter((s) => s.rank !== 1 && s.revealed).length;
+            const currentSatPoints = score;
+
+            // Bonus Intuition Pure : forte récompense pour n'avoir utilisé aucun satellite ni indice !
+            let intuitionBonus = 0;
+            if (!firstLetterClue) {
+              if (satellitesFoundCount === 0) {
+                intuitionBonus = 1500; // Coup de Maître : 0 satellite et 0 indice utilisé !
+              } else if (satellitesFoundCount === 1) {
+                intuitionBonus = 700;  // 1 seul satellite
+              } else if (satellitesFoundCount === 2) {
+                intuitionBonus = 350;  // 2 satellites
               }
-              return nextCount;
+            }
+
+            const livesBonus = lives * 100;
+            const finalCalculatedScore = 1000 + currentSatPoints + intuitionBonus + livesBonus;
+
+            setScore(finalCalculatedScore);
+            setScoreBreakdown({
+              baseTarget: 1000,
+              intuitionBonus,
+              livesBonus,
+              satellitePoints: currentSatPoints,
+              total: finalCalculatedScore,
+              isPerfect: satellitesFoundCount === 0 && !firstLetterClue && lives === MAX_LIVES,
             });
+
+            endGame("won", finalCalculatedScore);
+          } else {
+            // Découverte d'un satellite d'aide
+            setScore((s) => s + result.points);
+            setWordsFound((w) => w + 1);
           }
 
           // Réinitialise justRevealed après l'animation
@@ -539,6 +577,53 @@ Score: ${score.toLocaleString()} pts
                 </>
               )}
             </div>
+
+            {/* Détail du score méritocratique */}
+            {scoreBreakdown && (
+              <div className="bg-black/50 border border-gray-800 rounded-xl p-4 flex flex-col gap-2.5 text-xs text-left animate-in fade-in duration-300">
+                <div className="flex justify-between items-center text-gray-300">
+                  <span className="flex items-center gap-1.5">
+                    <span>🎯</span>
+                    <span className="font-medium">Cible trouvée</span>
+                  </span>
+                  <span className="font-mono font-bold text-yellow-400">+{scoreBreakdown.baseTarget} pts</span>
+                </div>
+
+                {scoreBreakdown.intuitionBonus > 0 && (
+                  <div className="flex justify-between items-center text-emerald-300 bg-emerald-950/50 p-2 rounded-lg border border-emerald-500/40">
+                    <span className="flex items-center gap-1.5 font-bold">
+                      <span>⚡</span>
+                      <span>
+                        {scoreBreakdown.intuitionBonus === 1500
+                          ? "Bonus Intuition Pure (0 satellite & 0 indice)"
+                          : "Bonus Déduction Rapide (très peu de satellites)"}
+                      </span>
+                    </span>
+                    <span className="font-mono font-black text-emerald-400">
+                      +{scoreBreakdown.intuitionBonus} pts
+                    </span>
+                  </div>
+                )}
+
+                <div className="flex justify-between items-center text-gray-300">
+                  <span className="flex items-center gap-1.5">
+                    <span>❤️</span>
+                    <span className="font-medium">Bonus Vies conservées ({lives}/10)</span>
+                  </span>
+                  <span className="font-mono font-bold text-red-400">+{scoreBreakdown.livesBonus} pts</span>
+                </div>
+
+                {scoreBreakdown.satellitePoints > 0 && (
+                  <div className="flex justify-between items-center text-gray-400">
+                    <span className="flex items-center gap-1.5">
+                      <span>🛰️</span>
+                      <span>Satellites explorés</span>
+                    </span>
+                    <span className="font-mono font-bold text-blue-400">+{scoreBreakdown.satellitePoints} pts</span>
+                  </div>
+                )}
+              </div>
+            )}
 
             {/* Score final */}
             <div className="text-center py-4 bg-black/30 rounded-xl">

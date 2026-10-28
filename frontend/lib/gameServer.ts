@@ -93,6 +93,13 @@ export function getChallengePublic(
 
   const answerWord = challenge.answer || "";
 
+  const activeSlots = challenge.top10.slice(0, 6).map((card, idx) => ({
+    rank: card.rank,
+    // Cible #1 = 1000 pts, Satellites = points d'exploration échelonnés
+    points: card.rank === 1 ? 1000 : Math.round(180 - idx * 25),
+    revealed: false,
+  }));
+
   return {
     id: challenge.id,
     date: challenge.date || today,
@@ -105,12 +112,8 @@ export function getChallengePublic(
     difficulty: challenge.difficulty,
     answer_length: answerWord.length,
     first_letter: answerWord ? answerWord[0].toUpperCase() : "",
-    top10: challenge.top10.map((card) => ({
-      rank: card.rank,
-      points: card.points,
-      revealed: false,
-    })),
-    total_possible_points: challenge.total_possible_points,
+    top10: activeSlots,
+    total_possible_points: 3500, // Score max parfait (One-shot sans indice + 10 vies)
   };
 }
 
@@ -129,15 +132,18 @@ export function scorePlayerGuess(
 
   const cleanGuess = cleanText(guess);
 
-  // Vérifier si le mot correspond à une carte du Top 10
-  for (const card of challenge.top10) {
+  // Vérifier la cible (#1) et les 5 satellites les plus proches (rangs 1 à 6)
+  const activeSlots = challenge.top10.slice(0, 6);
+  for (let idx = 0; idx < activeSlots.length; idx++) {
+    const card = activeSlots[idx];
     if (cleanText(card.word) === cleanGuess) {
+      const awardedPoints = card.rank === 1 ? 1000 : Math.round(180 - idx * 25);
       return {
         in_top10: true,
         rank: card.rank,
-        points: card.points,
+        points: awardedPoints,
         similarity: card.similarity,
-        feedback: card.rank === 1 ? "exact" : "hot",
+        feedback: card.rank === 1 ? ("exact" as const) : ("hot" as const),
         revealed_word: card.word,
       };
     }
@@ -148,7 +154,7 @@ export function scorePlayerGuess(
     rank: null,
     points: 0,
     similarity: 0.0,
-    feedback: "cold",
+    feedback: "cold" as const,
     revealed_word: null,
   };
 }
@@ -162,8 +168,13 @@ export function getFullReveal(theme: string = "culture", challengeId?: string | 
     challenge = getDailyChallenge(theme);
   }
 
+  const activeSlots = challenge.top10.slice(0, 6).map((card, idx) => ({
+    ...card,
+    points: card.rank === 1 ? 1000 : Math.round(180 - idx * 25),
+  }));
+
   return {
-    top10: challenge.top10,
+    top10: activeSlots,
     word_a: challenge.word_a,
     word_b: challenge.word_b,
     word_c: challenge.word_c,
